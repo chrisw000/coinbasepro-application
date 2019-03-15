@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="12.1.2" />
+    <PackageReference Include="Destructurama.Attributed" Version="2.0.0" />
+    <PackageReference Include="EFCore.BulkExtensions" Version="2.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\GitHub\coinbasepro-csharp\CoinbasePro\CoinbasePro.csproj" />
+    <ProjectReference Include="..\..\TA4N\TA4N\TA4N.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="HostedServices\Order\" />
+  </ItemGroup>
+
+</Project>
