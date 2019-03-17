@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using CoinbasePro.Application.Data.Query;
 
-namespace CoinbasePro.Application.Data.Query.CandleMonitor
+namespace CoinbasePro.Application.HostedServices.Gather.DataSource
 {
     public interface ICandleMonitorFeedProvider
     {

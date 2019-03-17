@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using CoinbasePro.Application.Data.Query;
 
-namespace CoinbasePro.Application.Data.Query.CandleMonitor
+namespace CoinbasePro.Application.HostedServices.Gather.DataSource.Csv
 {
-    public class FixedProvider : ICandleMonitorFeedProvider
+    public class CsvCandleMonitorFeed : ICandleMonitorFeedProvider
     {
         private readonly IEnumerable<CandleMonitorFeeds> _rc;
 
-        public FixedProvider(IEnumerable<CandleMonitorFeeds> feeds)
+        public CsvCandleMonitorFeed(IEnumerable<CandleMonitorFeeds> feeds)
         {
             _rc = feeds;
         }

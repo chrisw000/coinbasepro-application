@@ -21,6 +21,12 @@ namespace CoinbasePro.Application.Data.Query
 
         public MarketFeedSettings MarketFeedSettings => _marketFeedSettings ?? (_marketFeedSettings = new MarketFeedSettings(ProductId, Granularity));
 
+        public CandleMonitorFeeds()
+        {
+            // empty constructor for EF
+        }
+
+        // Used by the CSV provider
         public CandleMonitorFeeds(ProductType productType, CandleGranularity granularity, bool hasOverlay = true, DateTime? tradeFromUtc = null)
         {
             if (tradeFromUtc != null && tradeFromUtc?.Kind != DateTimeKind.Utc)

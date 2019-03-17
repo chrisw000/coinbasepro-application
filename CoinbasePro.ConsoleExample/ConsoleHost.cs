@@ -110,16 +110,20 @@ namespace CoinbasePro.ConsoleExample
 
                     // Usually SQL Server would be used (sql scripts not in Github yet)
                     //services.AddSingleton<ICandleProvider, SqlServerCandleProvider>();
-                    //services.AddTransient<ICandleMonitorFeedProvider, SqlServerCandleMonitorFeedProvider>();
+                    //services.AddTransient<ICandleMonitorFeedProvider, SqlServerCandleMonitorFeed>();
 
                     // Instead use the CSV route for ease of demonstration
                     services.AddSingleton<ICandleProvider, CsvCandleProvider>();
                     // Setup the markets to pull data for
-                    services.AddTransient<ICandleMonitorFeedProvider>(sp => new FixedProvider(new List<CandleMonitorFeeds>()
+                    services.AddTransient<ICandleMonitorFeedProvider>(sp => new CsvCandleMonitorFeed(new List<CandleMonitorFeeds>()
                                         {
+                                            // There is a bug in GDAX.Api.ClientLibrary that causes endless loop  calling REST service
+                                            // when the amount of data on GDAX is less than what is trying to be pulled
+                                            // I've submitted a buxfix - which will be in the 1.0.28 Nuget version
+                                            // for now just pull currencies with at least a year of data
                                             new CandleMonitorFeeds(ProductType.BtcUsd, CandleGranularity.Hour1),
                                             new CandleMonitorFeeds(ProductType.EthUsd, CandleGranularity.Hour1),
-                                            new CandleMonitorFeeds(ProductType.ZecUsdc, CandleGranularity.Minutes15)
+                                            new CandleMonitorFeeds(ProductType.EthEur, CandleGranularity.Minutes15)
                                         })
                     );
 

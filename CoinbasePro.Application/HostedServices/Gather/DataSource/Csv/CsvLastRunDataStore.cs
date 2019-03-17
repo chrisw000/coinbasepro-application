@@ -23,12 +23,12 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource.Csv
 
         private CsvLastRunDataStore(string fullPath)
         {
-            _minutes1 = DateTime.UtcNow.AddYears(-3);
-            _minutes5 = DateTime.UtcNow.AddYears(-3);
-            _minutes15 = DateTime.UtcNow.AddYears(-3);
-            _hour1 = DateTime.UtcNow.AddYears(-5);
-            _hour6 = DateTime.UtcNow.AddYears(-5);
-            _hour24 = DateTime.UtcNow.AddYears(-5);
+            _minutes1 = DateTime.UtcNow.AddYears(-1);
+            _minutes5 = DateTime.UtcNow.AddYears(-1);
+            _minutes15 = DateTime.UtcNow.AddYears(-1);
+            _hour1 = DateTime.UtcNow.AddYears(-1);
+            _hour6 = DateTime.UtcNow.AddYears(-1);
+            _hour24 = DateTime.UtcNow.AddYears(-1);
 
             // This could be better... don't have direct access to the AppSettings out of DI
             // so needs to juggle the path data around
@@ -133,7 +133,13 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource.Csv
             public DateTime Hour6 { get; set; }
             public DateTime Hour24 { get; set; }
 
-            public CsvLastRunStoreSerializer(CsvLastRunDataStore store)
+            // ReSharper disable once UnusedMember.Local
+            public CsvLastRunStoreSerializer()
+            {
+                // for the json serializer
+            }
+
+            internal CsvLastRunStoreSerializer(CsvLastRunDataStore store)
             {
                 Minutes1 = store._minutes1;
                 Minutes5 = store._minutes5;

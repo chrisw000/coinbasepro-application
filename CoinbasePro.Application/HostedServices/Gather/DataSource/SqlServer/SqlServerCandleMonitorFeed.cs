@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CoinbasePro.Application.HostedServices.Gather.DataSource;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CoinbasePro.Application.Data.Query.CandleMonitor
 {
-    public class SqlServerProvider : ICandleMonitorFeedProvider
+    public class SqlServerCandleMonitorFeed : ICandleMonitorFeedProvider
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public SqlServerProvider(IServiceScopeFactory serviceScopeFactory)
+        public SqlServerCandleMonitorFeed(IServiceScopeFactory serviceScopeFactory)
         {
             _serviceScopeFactory = serviceScopeFactory;
         }
