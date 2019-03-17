@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoinbasePro.Application.Data;
 using CoinbasePro.Application.Data.Models;
-using CoinbasePro.Application.Data.Query.CandleMonitor;
 using CoinbasePro.Application.HostedServices.Gather.DataSource;
 using CoinbasePro.Exceptions;
 using CoinbasePro.Services.Products.Models;

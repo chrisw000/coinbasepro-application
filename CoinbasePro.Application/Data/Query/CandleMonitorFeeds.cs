@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using CoinbasePro.Application.Data.Models;
 using CoinbasePro.Services.Products.Types;
 using CoinbasePro.Shared.Types;
