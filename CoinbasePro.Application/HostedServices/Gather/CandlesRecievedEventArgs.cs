@@ -15,10 +15,10 @@ namespace CoinbasePro.Application.HostedServices.Gather
 
     public class CandlesReceivedEventArgs : EventArgs
     {
-        public MarketFeedSettings MarketFeedSettings { get; }
-        public TimeSeries TimeSeries { get; }
+        public MarketFeedSettings MarketFeedSettings { get; set; }
+        public TimeSeries TimeSeries { get; set; }
 
-        public CandleSource CandleSource { get;}
+        public CandleSource CandleSource { get; set; }
 
         public CandlesReceivedEventArgs(MarketFeedSettings settings, TimeSeries series, CandleSource candleSource)
         {

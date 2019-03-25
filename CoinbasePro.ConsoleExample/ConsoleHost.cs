@@ -35,6 +35,7 @@ namespace CoinbasePro.ConsoleExample
                 .MinimumLevel.Override("System", LogEventLevel.Warning)
                 .MinimumLevel.Override("CoinbasePro", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.Azure.KeyVault", LogEventLevel.Verbose)
+                .MinimumLevel.Override("CoinbasePro.Application.RabbitMq", LogEventLevel.Verbose)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .CreateLogger();
@@ -121,6 +122,11 @@ namespace CoinbasePro.ConsoleExample
                                             new CandleMonitorFeeds(ProductType.EthEur, CandleGranularity.Minutes15)
                                         })
                     );
+
+                    // Use the event driven candle production / consumption
+                    services.AddSingleton<CandleProducerConsumer>();
+                    services.AddSingleton<ICandleProducer>(x => x.GetRequiredService<CandleProducerConsumer>());
+                    services.AddSingleton<ICandleConsumer>(x => x.GetRequiredService<CandleProducerConsumer>());
 
                     // Add the hosted services
                     services.AddSingleton<ICandleMonitor, CandleMonitor>();

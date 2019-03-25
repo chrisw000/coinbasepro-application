@@ -13,5 +13,7 @@
         }
 
         public string MlModelsPath { get; set; }
+
+        public bool HasOverlayFastUpdate { get; set; } = false;
     }
 }

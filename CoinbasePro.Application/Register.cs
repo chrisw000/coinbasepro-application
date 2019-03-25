@@ -1,11 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CoinbasePro.Application
 {
-    public class Register
+    public static class Register
     {
-        public static void Services(IServiceCollection services)
+        public static void AddApplication(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddTransient<IStartupFilter, SettingValidationStartupFilter>();
+
             services.AddSingleton<TA4N.LogWrapper, TA4N.LogWrapper>();
         }
     }

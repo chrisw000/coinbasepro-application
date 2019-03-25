@@ -11,6 +11,7 @@ using CoinbasePro.Services.Products.Models;
 using CoinbasePro.Shared.Types;
 using CoinbasePro.Shared.Utilities.Extensions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NodaTime;
 using NodaTime.Text;
 using TA4N;
@@ -19,19 +20,12 @@ namespace CoinbasePro.Application.HostedServices.Gather
 {
     public sealed class CandleMonitor : AbstractHostedServiceProvider, ICandleMonitor
     {
-        #region CandlesReceived Event
-        public event CandlesReceivedEventHandler CandlesReceived;
-
-        private void OnCandlesReceived(CandlesReceivedEventArgs e)
-        {
-            CandlesReceived?.Invoke(this, e);
-        }
-        #endregion
-
         private readonly CoinbaseProClient _client;
         private readonly IStartupWorkflow _startupWorkflow;
         private readonly ICandleProvider _provider;
         private readonly ICandleMonitorFeedProvider _candleMonitorFeedProvider;
+        private readonly ICandleProducer _candleProducer;
+        private readonly AppSetting _appSetting;
         private readonly ILogger<CandleMonitor> _logger;
 
         private readonly ConcurrentDictionary<MarketFeedSettings, CandleMonitorData> _state = new ConcurrentDictionary<MarketFeedSettings, CandleMonitorData>();
@@ -45,12 +39,16 @@ namespace CoinbasePro.Application.HostedServices.Gather
             , IStartupWorkflow startupWorkflow
             , ICandleProvider candleProvider
             , ICandleMonitorFeedProvider candleMonitorFeedProvider
+            , ICandleProducer candleProducer
+            , IOptions<AppSetting> appSetting
             , ILogger<CandleMonitor> logger)
         {
             _client = client;
             _startupWorkflow = startupWorkflow;
             _provider = candleProvider;
             _candleMonitorFeedProvider = candleMonitorFeedProvider;
+            _candleProducer = candleProducer;
+            _appSetting = appSetting.Value;
             _logger = logger;
         }
 
@@ -73,7 +71,7 @@ namespace CoinbasePro.Application.HostedServices.Gather
 
             foreach (var item in _candleMonitorFeedProvider.GetFeeds())
             {
-                var candleMonitorData = new CandleMonitorData(item, _provider);
+                var candleMonitorData = new CandleMonitorData(item, _provider, _appSetting);
 
                 // TradeFrom.HasValue is the "fast" markets being trades, so pre-load their data
                 if (item.TradeFromUtc.HasValue)
@@ -107,7 +105,7 @@ namespace CoinbasePro.Application.HostedServices.Gather
 
             try
             {
-                OnCandlesReceived(new CandlesReceivedEventArgs(candleMonitorData.Settings, series, candleSource));
+                _candleProducer.Send(new CandlesReceivedEventArgs(candleMonitorData.Settings, series, candleSource));
             }
             catch (Exception e)
             {
@@ -230,7 +228,7 @@ namespace CoinbasePro.Application.HostedServices.Gather
 
             try
             {
-                OnCandlesReceived(new CandlesReceivedEventArgs(currentState.Settings, series, CandleSource.RestCall));
+                _candleProducer.Send(new CandlesReceivedEventArgs(currentState.Settings, series, CandleSource.RestCall));
             }
             catch (Exception e)
             {

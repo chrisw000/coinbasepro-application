@@ -43,7 +43,9 @@ namespace CoinbasePro.Application.HostedServices
                 _logger.LogDebug("HostedService<{HostedServiceName}> Periodic Work loop started", _typeName);
 
                 stoppingToken.Register(() =>
-                    _logger.LogInformation("Stopping HostedService<{HostedServiceName}> background task is stopping due to cancellation", _typeName));
+                    _logger.LogInformation(
+                        "Stopping HostedService<{HostedServiceName}> background task is stopping due to cancellation",
+                        _typeName));
 
                 while (!stoppingToken.IsCancellationRequested)
                 {
@@ -52,6 +54,10 @@ namespace CoinbasePro.Application.HostedServices
                 }
 
                 _logger.LogWarning("Stopping HostedService<{HostedServiceName}> background task", _typeName);
+            }
+            catch (TaskCanceledException)
+            {
+                // ignore, this is logged as info above with "background task is stopping due to cancellation"
             }
             catch (Exception e)
             {

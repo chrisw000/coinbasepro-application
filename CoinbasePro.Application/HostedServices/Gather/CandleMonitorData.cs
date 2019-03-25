@@ -51,14 +51,14 @@ namespace CoinbasePro.Application.HostedServices.Gather
             // hide use
         }
 
-        public CandleMonitorData(CandleMonitorFeeds item, ICandleProvider candleProvider)
+        public CandleMonitorData(CandleMonitorFeeds item, ICandleProvider candleProvider, AppSetting appSetting)
         {
             Settings = item.MarketFeedSettings;
 
             var p = candleProvider.Load(Settings); // Just populate the provider DataStores, don't get any data
             
             LastRunUtc = p.LastUpdatedUtc;
-            IsFastUpdate = item.TradeFromUtc.HasValue;
+            IsFastUpdate = item.TradeFromUtc.HasValue || (item.HasOverlay && appSetting.HasOverlayFastUpdate);
             HasOverlay = item.HasOverlay;
             DataSource = candleProvider.DataStores[Settings];
 

@@ -16,7 +16,6 @@ namespace CoinbasePro.Application.HostedServices.Gather
 
     public interface ICandleMonitor : IHostedServiceProvider, ICandleMonitorAsViewModel
     {
-        event CandlesReceivedEventHandler CandlesReceived;
     }
 
     public interface ICandleMonitorAsViewModel
