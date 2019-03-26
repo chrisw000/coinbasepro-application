@@ -1,6 +1,8 @@
 # coinbasepro-application
 dotnet hosted services to handle data from the coinbasepro-sharp api
 
+[![Build status](https://ci.appveyor.com/api/projects/status/n062lhwlltgthrt4?svg=true)](https://ci.appveyor.com/project/chrisw000/coinbasepro-application)
+
 <h2>Getting Started</h2>
 
 <i>Generate your key at https://pro.coinbase.com/profile/api</i>
