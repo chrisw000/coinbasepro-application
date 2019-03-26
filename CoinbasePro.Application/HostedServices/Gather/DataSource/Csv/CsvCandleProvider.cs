@@ -31,7 +31,7 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource.Csv
             if (DataStores.ContainsKey(settings))
                 return DataStores[settings];
 
-            var rc = new CsvCandleDataSource(settings, _lastRun[settings.ProductId], _logger);
+            var rc = new CsvCandleDataSource(_appSettings.CsvPath, settings, _lastRun[settings.ProductId], _logger);
             DataStores.Add(settings, rc);
             return rc;
         }

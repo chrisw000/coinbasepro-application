@@ -10,11 +10,13 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource.Csv
 {
     public class CsvCandleDataSource : ICandleDataSource
     {
+        private readonly string _csvPath;
         private readonly CsvLastRunDataStore _parent;
         private readonly ILogger _logger;
 
-        public CsvCandleDataSource(MarketFeedSettings settings, CsvLastRunDataStore parent, ILogger<CsvCandleDataSource> logger)
+        public CsvCandleDataSource(string csvPath, MarketFeedSettings settings, CsvLastRunDataStore parent, ILogger<CsvCandleDataSource> logger)
         {
+            _csvPath = csvPath; // TODO: clean this up & use in CsvLastRunDataStore
             Settings = settings;
             _parent = parent;
             _logger = logger;
@@ -41,18 +43,16 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource.Csv
 
             await Task.CompletedTask; // this is only here because the SQL route reads async
 
-            // CSV Loader - need to share file names
-            // - or have a "being loaded" set used by CandleMonitor
-            // - and a periodically taken copy for Strategy runs?
             var fileName = $"{Settings.ProductId.GetEnumMemberValue()}-{Settings.Granularity:D}.csv";
+            var fullPath = Path.Combine(_csvPath, fileName);
 
             try
             {
-                return CsvTimeSeries.LoadSeries(fileName, (int)Settings.Granularity, fromUtc, toUtc);
+                return CsvTimeSeries.LoadSeries(fullPath, (int)Settings.Granularity, fromUtc, toUtc);
             }
             catch (FileNotFoundException)
             {
-                _logger.LogWarning($"CsvCandleProvider.Load file not found {fileName} - using empty TimeSeries.");
+                _logger.LogWarning($"CsvCandleProvider.Load file not found {fullPath} - using empty TimeSeries.");
                 return new TimeSeries(fileName);
             }
         }
