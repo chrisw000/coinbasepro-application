@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinbasePro.Application.RabbitMq", "CoinbasePro.Application.RabbitMq\CoinbasePro.Application.RabbitMq.csproj", "{73D657EC-7F0A-4371-90F9-7DD5A16A582F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinbasePro.Application.RabbitMq.ExampleProducer", "CoinbasePro.Application.RabbitMq.ExampleProducer\CoinbasePro.Application.RabbitMq.ExampleProducer.csproj", "{C072D09A-0EEF-4ED0-8A25-26B799D7F0FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinbasePro.Application", "..\coinbasepro-application\CoinbasePro.Application\CoinbasePro.Application.csproj", "{C57BAA7C-E1C3-4C58-A2D6-1FC7E187A367}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinbasePro.Application.RabbitMq.ExampleConsumer", "CoinbasePro.Application.RabbitMq.ExampleComsumer\CoinbasePro.Application.RabbitMq.ExampleConsumer.csproj", "{967ECB00-715C-42D0-AB1C-0FD93BCAFEF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{73D657EC-7F0A-4371-90F9-7DD5A16A582F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73D657EC-7F0A-4371-90F9-7DD5A16A582F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73D657EC-7F0A-4371-90F9-7DD5A16A582F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{73D657EC-7F0A-4371-90F9-7DD5A16A582F}.Debug|x64.Build.0 = Debug|Any CPU
+		{73D657EC-7F0A-4371-90F9-7DD5A16A582F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73D657EC-7F0A-4371-90F9-7DD5A16A582F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73D657EC-7F0A-4371-90F9-7DD5A16A582F}.Release|x64.ActiveCfg = Release|Any CPU
+		{73D657EC-7F0A-4371-90F9-7DD5A16A582F}.Release|x64.Build.0 = Release|Any CPU
+		{C072D09A-0EEF-4ED0-8A25-26B799D7F0FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C072D09A-0EEF-4ED0-8A25-26B799D7F0FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C072D09A-0EEF-4ED0-8A25-26B799D7F0FA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C072D09A-0EEF-4ED0-8A25-26B799D7F0FA}.Debug|x64.Build.0 = Debug|Any CPU
+		{C072D09A-0EEF-4ED0-8A25-26B799D7F0FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C072D09A-0EEF-4ED0-8A25-26B799D7F0FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C072D09A-0EEF-4ED0-8A25-26B799D7F0FA}.Release|x64.ActiveCfg = Release|Any CPU
+		{C072D09A-0EEF-4ED0-8A25-26B799D7F0FA}.Release|x64.Build.0 = Release|Any CPU
+		{C57BAA7C-E1C3-4C58-A2D6-1FC7E187A367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C57BAA7C-E1C3-4C58-A2D6-1FC7E187A367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C57BAA7C-E1C3-4C58-A2D6-1FC7E187A367}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C57BAA7C-E1C3-4C58-A2D6-1FC7E187A367}.Debug|x64.Build.0 = Debug|Any CPU
+		{C57BAA7C-E1C3-4C58-A2D6-1FC7E187A367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C57BAA7C-E1C3-4C58-A2D6-1FC7E187A367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C57BAA7C-E1C3-4C58-A2D6-1FC7E187A367}.Release|x64.ActiveCfg = Release|Any CPU
+		{C57BAA7C-E1C3-4C58-A2D6-1FC7E187A367}.Release|x64.Build.0 = Release|Any CPU
+		{967ECB00-715C-42D0-AB1C-0FD93BCAFEF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{967ECB00-715C-42D0-AB1C-0FD93BCAFEF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{967ECB00-715C-42D0-AB1C-0FD93BCAFEF2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{967ECB00-715C-42D0-AB1C-0FD93BCAFEF2}.Debug|x64.Build.0 = Debug|Any CPU
+		{967ECB00-715C-42D0-AB1C-0FD93BCAFEF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{967ECB00-715C-42D0-AB1C-0FD93BCAFEF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{967ECB00-715C-42D0-AB1C-0FD93BCAFEF2}.Release|x64.ActiveCfg = Release|Any CPU
+		{967ECB00-715C-42D0-AB1C-0FD93BCAFEF2}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C46EF0E-E80F-4512-9874-D77F9878B36F}
+	EndGlobalSection
+EndGlobal
