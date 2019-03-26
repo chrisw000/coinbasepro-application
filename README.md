@@ -47,3 +47,27 @@ CoinbasePro.ConsoleExample will batch up a series of API calls and download 1 ye
 Saving the data into into csv files together with csv meta data to allow it to pickup only new data on subsequent runs.
 
 The data is pulled in batches, so there can be a pause of upto 1 minute between batch runs.
+
+The currency and candle periods are defined in the example `ConsoleHost.cs` file
+```
+// Setup the markets to pull data for
+services.AddTransient<ICandleMonitorFeedProvider>(sp => new CsvCandleMonitorFeed(new List<CandleMonitorFeeds>()
+    {
+        // There is a bug in GDAX.Api.ClientLibrary that causes endless loop calling REST service
+        // when the amount of data on GDAX is less than what is trying to be pulled
+        // I've submitted a buxfix - which will be in the 1.0.28 Nuget version
+        // for now just pull currencies with at least a year of data
+        new CandleMonitorFeeds(ProductType.BtcUsd, CandleGranularity.Hour1),
+        new CandleMonitorFeeds(ProductType.EthUsd, CandleGranularity.Hour1),
+        new CandleMonitorFeeds(ProductType.EthEur, CandleGranularity.Minutes15)
+    })
+```
+
+<h2>RabbitMq</h2>
+More docs to follow, check out the example RabbitMq producer and consumer examples.
+
+Requires running a RabbitMq server, configuring user/password and endpoints for both the producer and consumer.
+Then TimeSeries / candle data can be transmitted across RabbitMq
+
+TODO: 
+More docs, and how to register the ICandleProducer, ICandleConsumer implementations into the `ConsoleExample` app.
