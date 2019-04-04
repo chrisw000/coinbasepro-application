@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoinbasePro.Application.Data;
 using CoinbasePro.Application.Data.Models;
+using CoinbasePro.Application.Exceptions;
 using CoinbasePro.Application.HostedServices.Gather.DataSource;
 using CoinbasePro.Exceptions;
 using CoinbasePro.Services.Products.Models;
@@ -20,7 +21,7 @@ namespace CoinbasePro.Application.HostedServices.Gather
 {
     public sealed class CandleMonitor : AbstractHostedServiceProvider, ICandleMonitor
     {
-        private readonly CoinbaseProClient _client;
+        private readonly ICoinbaseProClient _client;
         private readonly IStartupWorkflow _startupWorkflow;
         private readonly ICandleProvider _provider;
         private readonly ICandleMonitorFeedProvider _candleMonitorFeedProvider;
@@ -35,7 +36,7 @@ namespace CoinbasePro.Application.HostedServices.Gather
 
         public int Delay => (1000 * 1 * 60);
         
-        public CandleMonitor(CoinbaseProClient client
+        public CandleMonitor(ICoinbaseProClient client
             , IStartupWorkflow startupWorkflow
             , ICandleProvider candleProvider
             , ICandleMonitorFeedProvider candleMonitorFeedProvider
@@ -101,7 +102,7 @@ namespace CoinbasePro.Application.HostedServices.Gather
             var series = await candleMonitorData.DataSource.Load(from);
 
             // Fire the new candles event
-            _logger.LogTrace("{settings} CandleMonitor.StartupAsync firing event start", candleMonitorData.Settings);
+            _logger.LogTrace("{settings} CandleMonitor.StartupAsync firing CandlesReceivedEvent for source {candleSource}", candleMonitorData.Settings, candleSource);
 
             try
             {
@@ -149,9 +150,11 @@ namespace CoinbasePro.Application.HostedServices.Gather
             currentState.SetRunning();
 
             var utcNow = DateTime.UtcNow; // Store this so we're using the same "now" value for longer running batches
-            var periodStartUtc = currentState.DataSource.LastUpdatedUtc;            
+            var periodStartUtc = currentState.DataSource.LastUpdatedUtc;
             if (periodStartUtc.Kind != DateTimeKind.Utc)
-                throw new Exception("periodStartUtc.Kind != DateTimeKind.Utc Check OnModelCreatingCustom(modelBuilder) is called at end of CryptoContext.OnModelCreating");
+            {
+                throw new ArgumentNotUtcException(nameof(periodStartUtc), periodStartUtc);
+            }
 
             _logger.LogTrace("CandleMonitor {settings} has data up to {lastUpdated}, getting more...", currentState.Settings, periodStartUtc);
 
@@ -247,11 +250,11 @@ namespace CoinbasePro.Application.HostedServices.Gather
 
             if (loadFrom != null && loadFrom.Value.Kind != DateTimeKind.Utc)
             {
-                throw new ArgumentException($"{nameof(loadFrom)} is not UTC");
+                throw new ArgumentNotUtcException(nameof(loadFrom), loadFrom.Value);
             }
             if (loadUntil != null && loadUntil.Value.Kind != DateTimeKind.Utc)
             {
-                throw new ArgumentException($"{nameof(loadUntil)} is not UTC");
+                throw new ArgumentNotUtcException(nameof(loadUntil), loadUntil.Value);
             }
 
             var ticks = new List<Tick>();

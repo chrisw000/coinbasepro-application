@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CoinbasePro.Application.Exceptions;
 using CsvHelper;
 using NodaTime;
 using NodaTime.Text;
@@ -26,11 +27,12 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource.Csv
 
             if (fromUtc != null && fromUtc.Value.Kind != DateTimeKind.Utc)
             {
-                throw new ArgumentException($"{nameof(fromUtc)} is not UTC");
+                throw new ArgumentNotUtcException(nameof(fromUtc), fromUtc.Value);
+
             }
             if (toUtc != null && toUtc.Value.Kind != DateTimeKind.Utc)
             {
-                throw new ArgumentException($"{nameof(fromUtc)} is not UTC");
+                throw new ArgumentNotUtcException(nameof(toUtc), toUtc.Value);
             }
 
             List<dynamic> lines;

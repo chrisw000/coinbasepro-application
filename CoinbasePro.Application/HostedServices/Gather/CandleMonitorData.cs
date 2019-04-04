@@ -1,6 +1,7 @@
 ﻿using System;
 using CoinbasePro.Application.Data.Models;
 using CoinbasePro.Application.Data.Query;
+using CoinbasePro.Application.Exceptions;
 using CoinbasePro.Application.HostedServices.Gather.DataSource;
 using CoinbasePro.Services.Products.Types;
 
@@ -51,7 +52,7 @@ namespace CoinbasePro.Application.HostedServices.Gather
             // hide use
         }
 
-        public CandleMonitorData(CandleMonitorFeeds item, ICandleProvider candleProvider, AppSetting appSetting)
+        public CandleMonitorData(CandleMonitorFeeds item, ICandleProvider candleProvider, IAppSettingCandleMonitor appSetting)
         {
             Settings = item.MarketFeedSettings;
 
@@ -61,7 +62,7 @@ namespace CoinbasePro.Application.HostedServices.Gather
             IsFastUpdate = item.TradeFromUtc.HasValue || (item.HasOverlay && appSetting.HasOverlayFastUpdate);
             HasOverlay = item.HasOverlay;
             DataSource = candleProvider.DataStores[Settings];
-
+            
             BatchSize = IsFastUpdate ? 60 : 25;
         }
 
@@ -73,7 +74,9 @@ namespace CoinbasePro.Application.HostedServices.Gather
         internal void StopRunning(DateTime periodEndUtc)
         {
             if (periodEndUtc.Kind != DateTimeKind.Utc)
-                throw new Exception("CandleMonitorData.StopRunning(periodEndUtc) needs DateTimeKind==Utc");
+            {
+                throw new ArgumentNotUtcException(nameof(periodEndUtc), periodEndUtc);
+            }
 
             IsRunning = false;
             LastRunUtc = periodEndUtc;

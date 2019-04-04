@@ -12,7 +12,7 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource.Csv
         private readonly ILogger<CsvCandleDataSource> _logger;
         private readonly Dictionary<ProductType, CsvLastRunDataStore> _lastRun = new Dictionary<ProductType, CsvLastRunDataStore>();
         
-        public Dictionary<MarketFeedSettings, ICandleDataSource> DataStores { get; } = new Dictionary<MarketFeedSettings, ICandleDataSource>();
+        public IDictionary<MarketFeedSettings, ICandleDataSource> DataStores { get; } = new Dictionary<MarketFeedSettings, ICandleDataSource>();
 
         public CsvCandleProvider(IOptions<AppSetting> appSettings, ILogger<CsvCandleDataSource> logger)
         {

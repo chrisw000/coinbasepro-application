@@ -1,5 +1,6 @@
 ﻿using System;
 using CoinbasePro.Application.Data.Models;
+using CoinbasePro.Application.Exceptions;
 using CoinbasePro.Services.Products.Types;
 using CoinbasePro.Shared.Types;
 
@@ -20,21 +21,14 @@ namespace CoinbasePro.Application.Data.Query
 
         public MarketFeedSettings MarketFeedSettings => _marketFeedSettings ?? (_marketFeedSettings = new MarketFeedSettings(ProductId, Granularity));
 
-        public CandleMonitorFeeds()
+        public CandleMonitorFeeds(ProductType productId, CandleGranularity granularity, bool hasOverlay = true, DateTime? tradeFromUtc = null)
         {
-            // empty constructor for EF
-        }
-
-        // Used by the CSV provider
-        public CandleMonitorFeeds(ProductType productType, CandleGranularity granularity, bool hasOverlay = true, DateTime? tradeFromUtc = null)
-        {
-            if (tradeFromUtc != null && tradeFromUtc?.Kind != DateTimeKind.Utc)
+            if (tradeFromUtc != null && tradeFromUtc.Value.Kind != DateTimeKind.Utc)
             {
-                throw new ArgumentException(
-                    $"CandleMonitorFeeds({nameof(tradeFromUtc)}) needs to be in UTC, have received: {tradeFromUtc?.Kind} on {tradeFromUtc:O}");
+                throw new ArgumentNotUtcException(nameof(tradeFromUtc), tradeFromUtc.Value);
             }
 
-            ProductId = productType;
+            ProductId = productId;
             Granularity = granularity;
             TradeFromUtc = tradeFromUtc;
             HasOverlay = hasOverlay;

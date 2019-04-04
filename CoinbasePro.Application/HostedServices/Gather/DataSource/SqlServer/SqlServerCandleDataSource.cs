@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoinbasePro.Application.Data;
 using CoinbasePro.Application.Data.Models;
+using CoinbasePro.Application.Exceptions;
 using CoinbasePro.Shared.Utilities.Extensions;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -54,7 +55,10 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource.SqlServer
             }
             set
             {
-                if (value.Kind != DateTimeKind.Utc) throw new ArgumentException("LastUpdatedUtc must be saved to SQL Server in UTC", nameof(value));
+                if (value.Kind != DateTimeKind.Utc)
+                {
+                    throw new ArgumentNotUtcException(nameof(value), value);
+                }
 
                 using (var scope = _scopeFactory.CreateScope())
                 {
@@ -114,7 +118,6 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource.SqlServer
                             transaction.Rollback();
                         }
                     }
-
                 });
             }
         }

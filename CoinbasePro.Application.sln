@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinbasePro.Application", "CoinbasePro.Application\CoinbasePro.Application.csproj", "{3D38B0DB-3F2D-45BA-9066-1A06A0A2D8D4}"
 EndProject
@@ -26,6 +26,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinbasePro.Application.RabbitMq.ExampleConsumer", "Examples\RabbitMq\CoinbasePro.Application.RabbitMq.ExampleComsumer\CoinbasePro.Application.RabbitMq.ExampleConsumer.csproj", "{F6C0F4AC-DB33-4639-9882-E39F68A29739}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinbasePro.Application.RabbitMq.ExampleProducer", "Examples\RabbitMq\CoinbasePro.Application.RabbitMq.ExampleProducer\CoinbasePro.Application.RabbitMq.ExampleProducer.csproj", "{70C5ACE2-E4F5-4AD3-9B14-FADC62A49D00}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinbasePro.Application.Test", "CoinbasePro.Application.Test\CoinbasePro.Application.Test.csproj", "{9B1285E9-A375-4DC3-95F3-239EB4E6761E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinbasePro", "gdax-csharp\CoinbasePro\CoinbasePro.csproj", "{653B4D9A-E89E-4546-9C64-3BAD9DFDB032}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SubModules", "SubModules", "{2FAE2688-EAD6-4607-A9AB-1B57D1C04EF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +81,22 @@ Global
 		{70C5ACE2-E4F5-4AD3-9B14-FADC62A49D00}.Release|Any CPU.Build.0 = Release|Any CPU
 		{70C5ACE2-E4F5-4AD3-9B14-FADC62A49D00}.Release|x64.ActiveCfg = Release|Any CPU
 		{70C5ACE2-E4F5-4AD3-9B14-FADC62A49D00}.Release|x64.Build.0 = Release|Any CPU
+		{9B1285E9-A375-4DC3-95F3-239EB4E6761E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B1285E9-A375-4DC3-95F3-239EB4E6761E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B1285E9-A375-4DC3-95F3-239EB4E6761E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9B1285E9-A375-4DC3-95F3-239EB4E6761E}.Debug|x64.Build.0 = Debug|Any CPU
+		{9B1285E9-A375-4DC3-95F3-239EB4E6761E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B1285E9-A375-4DC3-95F3-239EB4E6761E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B1285E9-A375-4DC3-95F3-239EB4E6761E}.Release|x64.ActiveCfg = Release|Any CPU
+		{9B1285E9-A375-4DC3-95F3-239EB4E6761E}.Release|x64.Build.0 = Release|Any CPU
+		{653B4D9A-E89E-4546-9C64-3BAD9DFDB032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{653B4D9A-E89E-4546-9C64-3BAD9DFDB032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{653B4D9A-E89E-4546-9C64-3BAD9DFDB032}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{653B4D9A-E89E-4546-9C64-3BAD9DFDB032}.Debug|x64.Build.0 = Debug|Any CPU
+		{653B4D9A-E89E-4546-9C64-3BAD9DFDB032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{653B4D9A-E89E-4546-9C64-3BAD9DFDB032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{653B4D9A-E89E-4546-9C64-3BAD9DFDB032}.Release|x64.ActiveCfg = Release|Any CPU
+		{653B4D9A-E89E-4546-9C64-3BAD9DFDB032}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +108,8 @@ Global
 		{FD78786C-015C-4C9B-9DCD-50AF539D1BC1} = {703D3BAA-31F6-450A-8E03-7FD6DA647F70}
 		{F6C0F4AC-DB33-4639-9882-E39F68A29739} = {703D3BAA-31F6-450A-8E03-7FD6DA647F70}
 		{70C5ACE2-E4F5-4AD3-9B14-FADC62A49D00} = {703D3BAA-31F6-450A-8E03-7FD6DA647F70}
+		{653B4D9A-E89E-4546-9C64-3BAD9DFDB032} = {2FAE2688-EAD6-4607-A9AB-1B57D1C04EF7}
+		{2FAE2688-EAD6-4607-A9AB-1B57D1C04EF7} = {80A04015-9467-4D03-9D3A-CDD85C6E69C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {585977D6-83B1-41F8-983F-8466B65AF1EF}

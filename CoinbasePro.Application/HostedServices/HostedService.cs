@@ -72,6 +72,7 @@ namespace CoinbasePro.Application.HostedServices
             {
                 // Run your graceful clean-up actions
                 await _provider.StopAsync(stoppingToken);
+                await base.StopAsync(stoppingToken);
             }
             catch (Exception e)
             {

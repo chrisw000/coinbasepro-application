@@ -8,7 +8,7 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource.SqlServer
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public Dictionary<MarketFeedSettings, ICandleDataSource> DataStores { get; } = new Dictionary<MarketFeedSettings, ICandleDataSource>();
+        public IDictionary<MarketFeedSettings, ICandleDataSource> DataStores { get; } = new Dictionary<MarketFeedSettings, ICandleDataSource>();
 
         public SqlServerCandleProvider(IServiceScopeFactory serviceFactory)
         {

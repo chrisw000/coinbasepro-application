@@ -62,26 +62,9 @@ namespace CoinbasePro.ConsoleExample
 
                     if (args != null) configurationBuilder.AddCommandLine(args);
 
-                    // To enable running locally follow steps here:
-                    // https://docs.microsoft.com/en-us/azure/key-vault/service-to-service-authentication
-                    // Install Azure CLI v2.0.57 at time of writing (06/02/2019)
-                    // from Azure CLI, run:
-                    // az login
-                    // az account get-access-token
-                    // ---> the token now allows the Azure part to work correctly
+                    var builtConfig = configurationBuilder.Build();
 
-                    // - commented out for demo
-                    //var azureServiceTokenProvider = new AzureServiceTokenProvider();
-                    //var keyVaultClient = new KeyVaultClient(
-                    //        new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
-
-                    //var builtConfig = configurationBuilder.Build();
-
-                    //configurationBuilder.AddAzureKeyVault(
-                    //    builtConfig["ASPNETCORE_HOSTINGSTARTUP__KEYVAULT__CONFIGURATIONVAULT"],
-                    //    keyVaultClient,
-                    //    new DefaultKeyVaultSecretManager());
-                    
+                    Register.AddAzureKeyVault(builtConfig, configurationBuilder);
                 });
 
             builder.ConfigureServices((hostContext, services) =>
@@ -95,14 +78,14 @@ namespace CoinbasePro.ConsoleExample
 
                     // Customise the HttpClient to ensure we don't ever get HTTP 429 rate limit errors
                     services.AddSingleton<IHttpClient>(new RateLimitedHttpClient(3, 2.1));
-                    services.AddSingleton<CoinbaseProClient>();
+                    services.AddSingleton<ICoinbaseProClient, CoinbaseProClient>();
 
                     // --------------------------------------------
                     // The IStartupWorkflow controls the startup order of services in order
                     // the ensure inter dependencies receive events or data correctly
                     // As all the services are not yet in Github ensure CandleMonitor can still start
-                    // so use StartupWorkflowForCandleMonitorOnly
-                    services.AddSingleton<IStartupWorkflow, StartupWorkflowForCandleMonitorOnly>();
+                    // so use StartupWorkflow.ForCandleMonitorOnly()
+                    services.AddSingleton(sp => StartupWorkflow.ForCandleMonitorOnly());
 
                     // Usually SQL Server would be used (sql scripts not in Github yet)
                     //services.AddSingleton<ICandleProvider, SqlServerCandleProvider>();
@@ -113,13 +96,10 @@ namespace CoinbasePro.ConsoleExample
                     // Setup the markets to pull data for
                     services.AddTransient<ICandleMonitorFeedProvider>(sp => new CsvCandleMonitorFeed(new List<CandleMonitorFeeds>()
                                         {
-                                            // There is a bug in GDAX.Api.ClientLibrary that causes endless loop  calling REST service
-                                            // when the amount of data on GDAX is less than what is trying to be pulled
-                                            // I've submitted a buxfix - which will be in the 1.0.28 Nuget version
-                                            // for now just pull currencies with at least a year of data
                                             new CandleMonitorFeeds(ProductType.BtcUsd, CandleGranularity.Hour1),
                                             new CandleMonitorFeeds(ProductType.EthUsd, CandleGranularity.Hour1),
-                                            new CandleMonitorFeeds(ProductType.EthEur, CandleGranularity.Minutes15)
+                                            new CandleMonitorFeeds(ProductType.EthEur, CandleGranularity.Minutes15),
+                                            new CandleMonitorFeeds(ProductType.DaiUsdc, CandleGranularity.Hour1)
                                         })
                     );
 

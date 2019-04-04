@@ -5,7 +5,7 @@ namespace CoinbasePro.Application.HostedServices.Gather.DataSource
 {
     public interface ICandleProvider
     {
-        Dictionary<MarketFeedSettings, ICandleDataSource> DataStores { get; }
+        IDictionary<MarketFeedSettings, ICandleDataSource> DataStores { get; }
 
         ICandleDataSource Load(MarketFeedSettings settings);
     }

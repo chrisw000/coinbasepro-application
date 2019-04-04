@@ -1,6 +1,11 @@
 ﻿namespace CoinbasePro.Application
 {
-    public class AppSetting
+    public interface IAppSettingCandleMonitor
+    {
+        bool HasOverlayFastUpdate { get;set; }
+    }
+
+    public class AppSetting : IAppSettingCandleMonitor
     {
         private const string DefaultCsvPath = "/csv-data";
 
