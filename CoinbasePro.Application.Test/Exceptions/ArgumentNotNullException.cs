@@ -34,7 +34,7 @@ namespace CoinbasePro.Application.Test.Exceptions
         [Test]
         public void EnsureMessage()
         {
-            Assert.That(_subject.Message, Is.EqualTo("DateTime needs to be in UTC\r\nParameter name: pName to test for\r\nreceived: Local on 2019-04-03T13:09:15.0000000+01:00"));
+            Assert.That(_subject.Message, Is.EqualTo($"DateTime needs to be in UTC\r\nParameter name: pName to test for\r\nreceived: Local on {_d:O}"));
         }
 
         [Test]
